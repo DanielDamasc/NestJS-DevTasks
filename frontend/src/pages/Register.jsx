@@ -5,10 +5,12 @@ import Input from '../components/Input/index.jsx';
 import { Link } from 'react-router-dom';
 import loginImg from '../assets/login.png';
 
-const Login = () => {
+const Register = () => {
     // Estados para controlar as variáveis.
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(false);
 
@@ -19,19 +21,28 @@ const Login = () => {
       {/* Metade Esquerda */}
       <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-50 px-4 py-12">
 
-        {/* Card de Login */}
+        {/* Card de Registro */}
         <div className="max-w-lg w-full p-8">
           
           {/* Cabeçalho */}
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 text-start mb-4">Acesse sua conta</h1>
+            <h1 className="text-4xl font-bold text-gray-900 text-start mb-4">Crie sua conta</h1>
             <p className="text-sm text-gray-600 mt-2 text-start">
-              Digite suas credenciais para continuar
+              Digite seus dados para começar
             </p>
           </div>
 
           {/* Formulário */}
-          <form className='mb-16'>
+          <form className='mb-4'>
+
+            <Input
+              label="Nome Completo"
+              type="text"
+              placeholder="Digite seu nome..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
 
             <Input
               label="E-mail"
@@ -51,25 +62,34 @@ const Login = () => {
               required
             />
 
+            <Input
+              label="Confirme sua Senha"
+              type="password"
+              placeholder="******"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+
             {/* Botão com estado de carregamento */}
-            <div className="mt-6 max-w-32">
+            <div className="mt-6">
               <Button type="submit" isLoading={isLoading}>
-                Entrar
+                Registrar
               </Button>
             </div>
 
           </form>
 
           <div className="text-sm text-gray-600">
-            Ainda não tem uma conta?{' '}
+            Já tem uma conta?{' '}
             <Link 
-              to="/register" 
+              to="/" 
               className="text-blue-500 font-semibold hover:underline"
             >
-              Criar Conta
+              Log in
             </Link>
           </div>
-          
+
         </div>
 
       </div>
@@ -87,4 +107,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default Register;
