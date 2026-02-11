@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Instância do Axios.
 const api = axios.create({
-  baseURL: 'https://localhost:3000', // URL do NestJS.
+  baseURL: 'http://localhost:3000', // URL do NestJS.
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'

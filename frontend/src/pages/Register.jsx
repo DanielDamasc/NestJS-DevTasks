@@ -1,9 +1,9 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Button from '../components/Button/index.jsx';
 import Input from '../components/Input/index.jsx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import loginImg from '../assets/login.png';
+import api from '../services/api.js';
 
 const Register = () => {
     // Estados para controlar as variáveis.
@@ -13,6 +13,45 @@ const Register = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(false);
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+      e.preventDefault(); // Evita que a página recarregue.
+      setError(''); // Limpa erros antigos.
+
+      if (password !== confirmPassword) {
+        setError('As senhas não correspondem.');
+        return ;
+      }
+
+      if (password.length < 8) {
+        setError('A senha deve ter pelo menos 8 caracteres.');
+        return ;
+      }
+
+      setIsLoading(true);
+
+      try {
+        await api.post('/auth/register', {
+          name,
+          email,
+          password
+        });
+
+        navigate('/');
+
+      } catch (err) {
+        if (err.response?.data?.message) {
+          setError(err.response.data.message);
+        } else {
+          setError('Erro ao criar a conta. Tente novamente mais tarde.');
+        }
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
     return (
     // Container principal: Centraliza tudo na tela (h-screen = altura total)
@@ -33,7 +72,14 @@ const Register = () => {
           </div>
 
           {/* Formulário */}
-          <form className='mb-4'>
+          <form className='mb-4' onSubmit={handleSubmit}>
+
+            {/* Exibição de Erros */}
+            {error && (
+                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
+                    {error}
+                </div>
+            )}
 
             <Input
               label="Nome Completo"
