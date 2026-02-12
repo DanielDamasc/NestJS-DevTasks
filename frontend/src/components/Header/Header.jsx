@@ -46,7 +46,7 @@ const Header = () => {
                             className="text-red-500 hover:text-red-700 hover:bg-red-50 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2"
                             title="Sair do sistema"
                         >
-                            Sair
+                            Logout
                         </button>
                     </div>
                 </div>

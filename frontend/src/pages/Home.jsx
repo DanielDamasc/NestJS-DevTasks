@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "../components/Header/Header";
+import CreateProjectModal from "../components/Modals/CreateProjectModal";
 
 const Home = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,6 +26,11 @@ const Home = () => {
                 </div>
 
             </main>
+
+            <CreateProjectModal 
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
 
         </div>
     );
