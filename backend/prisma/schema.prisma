@@ -7,18 +7,53 @@ datasource db {
   provider = "postgresql"
 }
 
+// --- ENUMS ---
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+// --- MODELS ---
+
 model User {
   id       Int @id @default(autoincrement())
+
   name     String
   email    String @unique
   password String
+
   projects Project[]
 }
 
 model Project {
   id             Int @id @default(autoincrement())
+
   name           String @unique
   description    String?
-  user           User @relation(fields: [userId], references: [id])
+
   userId         Int
+  user           User @relation(fields: [userId], references: [id])
+  tasks          Task[]
+}
+
+model Task {
+  id             Int @id @default(autoincrement())
+
+  title          String
+  description    String?
+  priority       TaskPriority @default(MEDIUM)
+  dueDate        DateTime?
+  status         TaskStatus @default(TODO)
+  order          Int @default(0)
+
+  projectId      Int
+  project        Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
