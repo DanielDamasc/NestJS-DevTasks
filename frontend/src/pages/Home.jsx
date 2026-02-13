@@ -18,7 +18,7 @@ const Home = () => {
         const getProjects = async () => {
             setIsLoading(true);
             try {
-                const response = await api.get('/project/get/', {});
+                const response = await api.get('/project/', {});
                 setProjects(response.data);
 
             } catch (err) {
@@ -58,7 +58,7 @@ const Home = () => {
 
                 {!isLoading && projects.length === 0 && (
                     <div className="text-center py-20 bg-white rounded-xl border border-dashed border-gray-300">
-                        <p className="text-gray-500">No projects have been created...</p>
+                        <p className="text-gray-500">No projects created...</p>
                     </div>
                 )}
 

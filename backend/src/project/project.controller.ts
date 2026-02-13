@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Request, UseGuards } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { ProjectService } from './project.service';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -9,15 +9,21 @@ export class ProjectController {
     constructor(private readonly projectService: ProjectService) {}
 
     @UseGuards(AuthGuard)
-    @Post('create')
+    @Post()
     @HttpCode(HttpStatus.CREATED)
-    async createProject(@Body() createProjectDto: CreateProjectDto, @Request() req) {
+    async create(@Body() createProjectDto: CreateProjectDto, @Request() req) {
         return this.projectService.create(createProjectDto, req.user.sub);
     }
 
     @UseGuards(AuthGuard)
-    @Get('get')
-    async getProjects(@Request() req) {
-        return this.projectService.index(req.user.sub);
+    @Get()
+    async findAll(@Request() req) {
+        return this.projectService.findAll(req.user.sub);
+    }
+
+    @UseGuards(AuthGuard)
+    @Get(':id')
+    async findOne(@Param('id', ParseIntPipe) id: number, @Request() req) {
+        return this.projectService.findOne(req.user.sub, id);
     }
 }

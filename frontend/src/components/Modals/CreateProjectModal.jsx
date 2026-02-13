@@ -17,7 +17,7 @@ const CreateProjectModal = ({ isOpen, onClose, onProjectCreated }) => {
         setIsLoading(true);
 
         try {
-            const response = await api.post('/project/create',{
+            const response = await api.post('/project/',{
                 name,
                 description
             });

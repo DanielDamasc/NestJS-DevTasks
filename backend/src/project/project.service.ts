@@ -17,11 +17,20 @@ export class ProjectService {
         });
     }
 
-    async index(userId: number) {
+    async findAll(userId: number) {
         return this.prismaService.prismaClient.project.findMany({
             where: {
                 userId: userId,
             },
+        });
+    }
+
+    async findOne(userId: number, projectId: number) {
+        return this.prismaService.prismaClient.project.findFirst({
+           where: {
+            id: projectId,
+            userId: userId
+           }
         });
     }
 }
