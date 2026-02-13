@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import Input from "../Input/index.jsx";
 import Textarea from "../Textarea/index.jsx";
 import Button from "../Button/index.jsx";
@@ -34,7 +34,7 @@ const CreateProjectModal = ({ isOpen, onClose, onProjectCreated }) => {
             if (err.response?.data?.message) {
                 setError(err.response.data.message);
             } else {
-                setError('Erro ao fazer login. Tente novamente mais tarde.');
+                setError('Erro ao criar projeto. Tente mais tarde.');
             }
             console.log(err);
         } finally {
@@ -72,7 +72,6 @@ const CreateProjectModal = ({ isOpen, onClose, onProjectCreated }) => {
                         placeholder="Detalhes sobre o projeto..."
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        required
                     />
 
                     <div className="flex justify-end gap-3 items-center">

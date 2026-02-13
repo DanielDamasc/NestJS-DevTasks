@@ -16,4 +16,12 @@ export class ProjectService {
             }
         });
     }
+
+    async index(userId: number) {
+        return this.prismaService.prismaClient.project.findMany({
+            where: {
+                userId: userId,
+            },
+        });
+    }
 }

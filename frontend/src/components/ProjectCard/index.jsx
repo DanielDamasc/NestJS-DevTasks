@@ -5,7 +5,7 @@ const ProjectCard = ({ project }) => {
       <div className={`
         h-full bg-white rounded-xl border border-gray-200 p-6 
         transition-all duration-300 ease-in-out
-        hover:shadow-lg hover:border-indigo-300 hover:-translate-y-1
+        hover:shadow-md hover:border-indigo-300 hover:-translate-y-1
         flex flex-col
       `}>
         
@@ -16,19 +16,13 @@ const ProjectCard = ({ project }) => {
           <div className="
             w-12 h-12 rounded-lg bg-indigo-50 text-indigo-600 
             flex items-center justify-center text-xl font-bold
-            group-hover:bg-indigo-600 group-hover:text-white transition-colors
           ">
             {initial}
           </div>
-
-          {/* Seta discreta no canto (opcional) */}
-          <span className="text-gray-300 group-hover:text-indigo-500 transition-colors">
-            ↗
-          </span>
         </div>
 
         {/* Título */}
-        <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">
+        <h3 className="text-lg font-bold text-gray-900 mb-2">
           {project.name}
         </h3>
 
