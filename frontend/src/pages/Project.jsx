@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import api from "../services/api";
 import CreateTaskModal from "../components/Modals/CreateTaskModal";
 import CreateButton from "../components/CreateButton";
+import KanbanColumn from "../components/KanbanColumn";
 
 const Project = () => {
     const { id } = useParams(); // Pega o ID da URL.
@@ -23,16 +24,21 @@ const Project = () => {
         setTasks((prevTasks) => [taskData, ...prevTasks]);
     }
 
-    useEffect(() => {
-        // Se já tem os dados que vieram da página anterior, não faz nada
-        if (project) {
-            return ;
-        }
-        
+    useEffect(() => {        
         const getProject = async () => {
+            
+            // Se não vier através da home, ativa o carregamento visual do projeto.
+            if (!project) {
+                setIsLoading(true);
+            }
+
             try {
                 const response = await api.get(`/project/${id}`, {});
+
                 setProject(response.data);
+
+                // As tasks estão sendo buscadas como relation desta requisição.
+                setTasks(response.data.tasks || []);
 
             } catch (err) {
                 console.log(err);
@@ -71,7 +77,7 @@ const Project = () => {
                         <div className="flex flex-col md:flex-row md:items-start gap-6">
                             
                             {/* Ícone Grande com a Inicial */}
-                            <div className="flex-shrink-0 hidden md:block">
+                            <div className="shrink-0 hidden md:block">
                                 <div className="w-16 h-16 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-3xl font-bold shadow-md">
                                     {project.name.charAt(0).toUpperCase()}
                                 </div>
@@ -94,12 +100,35 @@ const Project = () => {
                                     />
                                 </div>
                                 
-                                <p className="text-gray-600 text-lg leading-relaxed">
+                                <p className="text-gray-600 text-md md:text-lg leading-relaxed">
                                     {project.description || (
-                                        <span className="text-gray-400 italic">Nenhuma descrição fornecida.</span>
+                                        <span className="text-gray-400 italic text-md md:text-lg">Nenhuma descrição fornecida.</span>
                                     )}
                                 </p>
                             </div>
+
+                        </div>
+                    </div>
+                )}
+
+                {!isLoading && project && (
+                    <div className="mt-8 pb-4">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                            <KanbanColumn 
+                                title="A fazer"
+                                tasks={tasks.filter(t => t.status === 'TODO')}
+                            />
+
+                            <KanbanColumn 
+                                title="Em andamento"
+                                tasks={tasks.filter(t => t.status === 'IN_PROGRESS')}
+                            />
+
+                            <KanbanColumn 
+                                title="Concluído"
+                                tasks={tasks.filter(t => t.status === 'DONE')}
+                            />
 
                         </div>
                     </div>

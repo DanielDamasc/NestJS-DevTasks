@@ -28,8 +28,12 @@ export class ProjectService {
     async findOne(userId: number, projectId: number) {
         return this.prismaService.prismaClient.project.findFirst({
            where: {
-            id: projectId,
-            userId: userId
+                id: projectId,
+                userId: userId
+           },
+        // Trás as tasks do banco na mesma requisição.    
+           include: {
+                tasks: true
            }
         });
     }
