@@ -19,9 +19,15 @@ const Header = () => {
                 <div className="flex justify-between h-16 items-center">
                     <div className="flex-shrink-0 flex items-center">
                         <Link to="/home">
-                            <span className="text-2xl font-bold text-gray-900 tracking-tight">
-                                Delistoper
-                            </span>
+                            <div className="font-mono text-xl md:text-2xl font-bold flex items-center tracking-tighter">
+                                <span className="text-indigo-600 mr-1">
+                                    cd
+                                </span>
+                                <span className="text-gray-900">
+                                    Delistoper/
+                                </span>
+                                <span className="w-3 h-6 bg-gray-600 animate-pulse hidden md:block"></span>
+                            </div>
                         </Link>
                     </div>
 
@@ -40,7 +46,7 @@ const Header = () => {
                             className="text-red-500 hover:text-red-700 hover:bg-red-50 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2"
                             title="Sair do sistema"
                         >
-                            Sair
+                            Logout
                         </button>
                     </div>
                 </div>

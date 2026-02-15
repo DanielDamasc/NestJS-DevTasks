@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import PrivateRoutes from './routes/PrivateRoutes';
+import Project from './pages/Project';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         {/* ----- ROTAS PROTEGIDAS ----- */}
         <Route element={<PrivateRoutes />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/project/:id" element={<Project />} />
         </Route>
 
       </Routes>
